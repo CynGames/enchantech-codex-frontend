@@ -21,6 +21,8 @@
                     type="text"
                     [(ngModel)]="searchFilters.title"
                     (input)="onSearchInput('title', $event)"
+                    (focus)="showKeywords = true"
+                    (blur)="onSearchBlur()"
                     placeholder="Search articles..."
                     class="search-input"
             />
@@ -45,6 +47,16 @@
                     <line x1="6" y1="6" x2="18" y2="18"></line>
                 </svg>
             </button>
+            <div class="keywords-container" [class.visible]="showKeywords">
+                <button
+                        *ngFor="let keyword of predefinedKeywords"
+                        class="keyword-button"
+                        (click)="selectKeyword(keyword)"
+                        (mousedown)="$event.preventDefault()"
+                >
+                    {{ keyword }}
+                </button>
+            </div>
         </div>
     </div>
 
@@ -52,12 +64,6 @@
     <div *ngIf="loading" class="loading-state">
         <div class="loader"></div>
         <p>Loading articles...</p>
-    </div>
-
-    <!-- Error State -->
-    <div *ngIf="error" class="error-state">
-        <p>{{ error }}</p>
-        <button (click)="loadArticles()">Try Again</button>
     </div>
 
     <!-- Articles Grid -->

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Article } from '../interfaces/article.interface';
-import { backendLocal } from "../environment/environment";
+import { environment } from "../environments/environment";
 
 interface ArticleParams {
   page: number;
@@ -21,10 +21,12 @@ interface ArticleResponse {
   providedIn: 'root'
 })
 export class ArticleService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    console.log(environment)
+  }
   
   getArticles(params: ArticleParams) {
-    return this.http.get<ArticleResponse>(`${backendLocal.apiUrl}/articles`, {
+    return this.http.get<ArticleResponse>(`${environment.apiUrl}/articles`, {
       params: this.cleanParams(params)
     });
   }
