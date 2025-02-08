@@ -48,7 +48,7 @@
     color: #1a202c;
     line-height: 1.4;
     display: -webkit-box;
-    -webkit-line-clamp: 1;
+    -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
@@ -377,7 +377,7 @@
     padding: 5px;
     border-radius: 50%;
     transition: transform 0.2s ease-in-out;
-    margin-left: 10px; /* Add some space between read more and bookmark icon if needed */
+    margin-left: 10px;
 }
 
 .bookmark-icon svg {
