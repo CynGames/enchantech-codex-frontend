@@ -1,0 +1,30 @@
+<div class="list-container">
+    <h2>{{ pageTitle }}</h2>
+    <div *ngIf="items.length === 0" class="empty-state">
+        No {{ pageTitle.toLowerCase() }} found
+    </div>
+    <div *ngFor="let item of items" class="list-item">
+        <ng-container>
+            <div class="article-item">
+                <h3>{{ item.title }}</h3>
+                <p>{{ item.description }}</p>
+                <div class="item-footer">
+                    <a
+                            [href]="item.articleLink"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="read-link"
+                    >
+                        Read Article
+                    </a>
+                    <button
+                            (click)="removeItem(item)"
+                            class="remove-btn"
+                    >
+                        Remove
+                    </button>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+</div>

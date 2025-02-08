@@ -1,7 +1,7 @@
+<link rel="stylesheet" href="articles.component.css">
 <div class="articles-container">
-    <!-- Search Form -->
     <div class="search-wrapper">
-        <div class="search-container">
+        <div class="search-container" #searchContainer>
             <svg
                     class="search-icon"
                     xmlns="http://www.w3.org/2000/svg"
@@ -22,9 +22,10 @@
                     [(ngModel)]="searchFilters.title"
                     (input)="onSearchInput('title', $event)"
                     (focus)="showKeywords = true"
-                    (blur)="onSearchBlur()"
+                    (keydown.enter)="handleKeydown($event)"
                     placeholder="Search articles..."
                     class="search-input"
+                    #searchInput
             />
             <button
                     *ngIf="searchFilters.title"
@@ -60,13 +61,11 @@
         </div>
     </div>
 
-    <!-- Loading State -->
     <div *ngIf="loading" class="loading-state">
         <div class="loader"></div>
         <p>Loading articles...</p>
     </div>
 
-    <!-- Articles Grid -->
     <div class="articles-grid" *ngIf="!loading && !error">
         <article class="article-card" *ngFor="let article of articles">
             <div class="article-content">
@@ -75,26 +74,37 @@
                     <h4 class="publisherTitle">{{ article.publisherTitle }}</h4>
                     <h4 class="publishedAt">{{ article.publishedAt | date:'yyyy-MM-dd' }}</h4>
                 </div>
+                <div class="article-image-container">
+                    <img
+                            [src]="article.imageLink"
+                            alt="{{ article.title }}"
+                            class="article-image"
+                            (error)="handleImageError(article)"
+                    >
+                </div>
                 <p class="article-description">{{ article.description }}</p>
             </div>
             <div class="article-footer">
                 <a [href]="article.articleLink"
                    target="_blank"
                    rel="noopener noreferrer"
-                   class="read-more">
+                   class="read-more"
+                   (click)="onReadMoreClick(article)">
                     Read full article
-                    <span class="arrow">→</span>
                 </a>
+                <button class="bookmark-icon" (click)="onBookmarkArticle(article)" [class.bookmarked]="isBookmarked(article)">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round">
+                        <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                    </svg>
+                </button>
             </div>
         </article>
     </div>
 
-    <!-- No Results Message -->
     <div *ngIf="!loading && !error && articles.length === 0" class="no-results">
         No articles found matching your search criteria
     </div>
 
-    <!-- Pagination Controls -->
     <div class="pagination" *ngIf="totalPages > 1">
         <button
                 class="pagination-button"

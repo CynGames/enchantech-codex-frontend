@@ -26,9 +26,6 @@
                 "input": "public"
               }
             ],
-            "styles": [
-              "src/styles.css"
-            ],
             "scripts": [],
             "server": "src/main.server.ts",
             "prerender": true,
@@ -94,9 +91,6 @@
                 "glob": "**/*",
                 "input": "public"
               }
-            ],
-            "styles": [
-              "src/styles.css"
             ],
             "scripts": []
           }

@@ -21,12 +21,10 @@ interface ArticleResponse {
   providedIn: 'root'
 })
 export class ArticleService {
-  constructor(private http: HttpClient) {
-    console.log(environment)
-  }
+  constructor(private http: HttpClient) {}
   
   getArticles(params: ArticleParams) {
-    return this.http.get<ArticleResponse>(`${environment.apiUrl}/articles`, {
+    return this.http.get<ArticleResponse>(`${environment.apiUrl}/api/articles`, {
       params: this.cleanParams(params)
     });
   }
